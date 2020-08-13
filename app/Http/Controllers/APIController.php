@@ -42,20 +42,15 @@ class APIController extends Controller
   );
 
   protected $whiteListedDomain = array(
-    'https://payhiram.ph/',
-    'https://www.payhiram.ph/',
-    'http://www.payhiram.ph/',
-    'http://payhiram.ph/',
-    'http://localhost:8001/',
-    'com.payhiram'
+    'https://runwayexpress.co.uk/',
   );
 
   protected $whiteListedDomainOrigin = array(
-    'https://payhiram.ph',
-    'https://www.payhiram.ph',
-    'http://www.payhiram.ph',
-    'http://payhiram.ph',
-    'com.payhiram',
+    'https://runwayexpress.co.uk',
+    'https://www.runwayexpress.co.uk',
+    'http://www.runwayexpress.co.uk',
+    'http://runwayexpress.co.uk',
+    'com.runwayexpress',
     'http://localhost:8001'
   );
 
