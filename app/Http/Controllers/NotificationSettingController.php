@@ -80,11 +80,11 @@ class NotificationSettingController extends APIController
     if(sizeof($previous) > 0){
       if($previous[0]['code'] != 'BLOCKED'){
         $code = $this->otpCodeGenerator();
-        NotificationSetting::where('account_id', '=', $data['account_id'])->update(array(
+        NotificationSetting::where('account_id', '=', $accountId)->update(array(
           'code' => $code,
           'updated_at' => Carbon::now()
         ));
-        app('App\Http\Controllers\EmailController')->otpEmailFundTransfer($data['account_id'], $code);
+        app('App\Http\Controllers\EmailController')->otpEmailFundTransfer($accountId, $code);
         return null;
       }else{
         // check difference in updated
@@ -95,7 +95,7 @@ class NotificationSettingController extends APIController
           return "Your account still blocked! Please wait for 30 minutes.";
         }else{
           $code = $this->otpCodeGenerator();
-          NotificationSetting::where('account_id', '=', $data['account_id'])->update(array(
+          NotificationSetting::where('account_id', '=', $accountId)->update(array(
             'code' => $code,
             'updated_at' => Carbon::now()
           ));
@@ -106,7 +106,7 @@ class NotificationSettingController extends APIController
       $code = $this->otpCodeGenerator();
       $insertData = array(
         'code'        => $code,
-        'account_id'  => $data['account_id'],
+        'account_id'  => $accountId,
         'email_login' => 0,
         'email_otp'   => 0,
         'email_pin'   => 0,
@@ -115,7 +115,7 @@ class NotificationSettingController extends APIController
         'created_at'  => Carbon::now()
       );
       NotificationSetting::insert($insertData);
-      app('App\Http\Controllers\EmailController')->otpEmailFundTransfer($data['account_id'], $code);
+      app('App\Http\Controllers\EmailController')->otpEmailFundTransfer($accountId, $code);
       return null;
     }
   }
