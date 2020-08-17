@@ -35,6 +35,17 @@
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
+  'luigel/laravel-paymongo' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Luigel\\Paymongo\\PaymongoServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Paymongo' => 'Luigel\\Paymongo\\Facades\\PaymongoFacade',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 
