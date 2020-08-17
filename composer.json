@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "adyen/php-api-library": "^7.1",
         "beyondcode/laravel-websockets": "^1.3",
         "doctrine/dbal": "^2.7",
         "fideloper/proxy": "^4.0",
@@ -15,6 +16,7 @@
         "laravel/socialite": "~2.0",
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "~1.0",
+        "luigel/laravel-paymongo": "1.1.1",
         "paypal/rest-api-sdk-php": "*",
         "pusher/pusher-php-server": "^4.1",
         "simplesoftwareio/simple-qrcode": "^2.0",

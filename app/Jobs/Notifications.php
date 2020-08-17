@@ -11,6 +11,8 @@ use App\Events\Notifications as EventNotifications;
 use App\Events\Message;
 use App\Events\MessageGroup;
 use App\Events\SystemNotification;
+use App\Events\Orders;
+use App\Events\Call;
 use Pusher\Pusher;
 class Notifications implements ShouldQueue
 {
@@ -62,6 +64,12 @@ class Notifications implements ShouldQueue
             case 'system_notification':
                 broadcast(new SystemNotification($this->data));
                 break;
+            case 'orders':
+                broadcast(new Orders($this->data));
+                break;
+            case 'call':
+                broadcast(new Call($this->data));
+              break;
             default:
                 # code...
                 break;
