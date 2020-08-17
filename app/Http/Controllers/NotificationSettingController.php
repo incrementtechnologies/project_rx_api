@@ -75,6 +75,51 @@ class NotificationSettingController extends APIController
     return $code;
   }
 
+    public function generateOtpById($accountId){
+    $previous = NotificationSetting::where('account_id', '=', $accountId)->get();
+    if(sizeof($previous) > 0){
+      if($previous[0]['code'] != 'BLOCKED'){
+        $code = $this->otpCodeGenerator();
+        NotificationSetting::where('account_id', '=', $data['account_id'])->update(array(
+          'code' => $code,
+          'updated_at' => Carbon::now()
+        ));
+        app('App\Http\Controllers\EmailController')->otpEmailFundTransfer($data['account_id'], $code);
+        return null;
+      }else{
+        // check difference in updated
+        $currentDate = Carbon::now();
+        $blockedDate = Carbon::createFromFormat('Y-m-d H:i:s', $previous[0]['updated_at']);
+        $diff = $currentDate->diffInMinutes($blockedDate);
+        if($diff < env('OTP_BLOCK_LIMIT')){
+          return "Your account still blocked! Please wait for 30 minutes.";
+        }else{
+          $code = $this->otpCodeGenerator();
+          NotificationSetting::where('account_id', '=', $data['account_id'])->update(array(
+            'code' => $code,
+            'updated_at' => Carbon::now()
+          ));
+          return null;
+        }
+      }
+    }else{
+      $code = $this->otpCodeGenerator();
+      $insertData = array(
+        'code'        => $code,
+        'account_id'  => $data['account_id'],
+        'email_login' => 0,
+        'email_otp'   => 0,
+        'email_pin'   => 0,
+        'sms_login'   => 0,
+        'sms_otp'     => 0,
+        'created_at'  => Carbon::now()
+      );
+      NotificationSetting::insert($insertData);
+      app('App\Http\Controllers\EmailController')->otpEmailFundTransfer($data['account_id'], $code);
+      return null;
+    }
+  }
+
   public function generateOTP(Request $request){
     $data = $request->all();
     $error = null;
@@ -124,7 +169,6 @@ class NotificationSettingController extends APIController
       'attempt' => 0,
       'timestamps' => Carbon::now()
     ));
-    
   }
 
   public function otpCodeGenerator(){
