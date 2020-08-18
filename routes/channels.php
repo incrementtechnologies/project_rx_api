@@ -16,5 +16,5 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('runway', function ($user) {
-    return $user;
+    return Authh::check();
 });
