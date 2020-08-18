@@ -25,6 +25,16 @@ class AuthenticateController extends Controller
     $users = UserAuth::all();
     return $users;
   }
+
+  public function broadcastAuth(Request $request){
+    $data = $request->all();
+    $user = UserAuth::where('id', '=', $data['account_id'])->get();
+    if(sizeof($user) > 0){
+      response()->json(true);
+    }
+    return response()->json(['error' => 'invalid_credentials'], 401); 
+  }
+
   public function refreshToken(){
     // config/jwt.php ttl to change token life
     // if ($token = JWTAuth::parseToken()->refresh()){
