@@ -14,3 +14,9 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+Broadcast::channel('runway', function ($user) {
+    return true;
+});
+Broadcast::channel('private-runway', function ($user) {
+    return true;
+});
