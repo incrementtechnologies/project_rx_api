@@ -123,3 +123,9 @@ $route = env('PACKAGE_ROUTE', '').'/google_places/';
 $controller = 'GooglePlaceController@';
 Route::post($route.'search', $controller."search");
 
+
+// Rider Place
+$route = env('PACKAGE_ROUTE', '').'/riders/';
+$controller = 'RiderController@';
+Route::post($route.'search', $controller."search");
+
