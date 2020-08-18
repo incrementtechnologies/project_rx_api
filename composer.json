@@ -16,7 +16,7 @@
         "laravel/socialite": "~2.0",
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "~1.0",
-        "luigel/laravel-paymongo": "^1.2",
+        "luigel/laravel-paymongo": "1.1.1",
         "paypal/rest-api-sdk-php": "*",
         "pusher/pusher-php-server": "^4.1",
         "simplesoftwareio/simple-qrcode": "^2.0",
