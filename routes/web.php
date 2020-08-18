@@ -77,6 +77,7 @@ Route::post($route.'/user', 'AuthenticateController@getAuthenticatedUser');
 Route::post($route.'/refresh', 'AuthenticateController@refreshToken');
 Route::post($route.'/invalidate', 'AuthenticateController@deauthenticate');
 Route::post($route.'/googlelogin', 'AuthenticateController@googleLogin');
+Route::post($route.'/broadcast_auth', 'AuthenticateController@broadcastAuth');
 Route::post($route.'/auth', function () {
     return true;
 });
