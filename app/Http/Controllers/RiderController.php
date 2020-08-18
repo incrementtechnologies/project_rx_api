@@ -16,7 +16,7 @@ class RiderController extends APIController
 
     public function search(Request $request){
         $data = $request->all();
-        Notifications::dispatch('rider', $data->toArray());
+        Notifications::dispatch('rider', $data);
         return $this->response();
     }
 }
