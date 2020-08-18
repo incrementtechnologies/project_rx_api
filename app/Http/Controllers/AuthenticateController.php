@@ -28,11 +28,10 @@ class AuthenticateController extends Controller
 
   public function broadcastAuth(Request $request){
     $data = $request->all();
-    // $user = UserAuth::where('id', '=', $data['account_id'])->get();
-    // if(sizeof($user) > 0){
-    //   return response()->json(true);
-    // }
-    return response()->json(true);
+    $user = UserAuth::where('id', '=', $data['account_id'])->get();
+    if(sizeof($user) > 0){
+      return response()->json(true);
+    }
     return response()->json(['error' => 'invalid_credentials'], 401); 
   }
 
