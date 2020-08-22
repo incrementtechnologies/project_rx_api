@@ -47,7 +47,7 @@ Route::get($route.'/storage/test/{filename}', function ($filename)
     $response = Response::make($file, 200);
     $response->header("Content-Type", $type);
 
-    return $response;
+    return $path;
 });
 Route::get($route.'/storage/logo/{filename}', function ($filename)
 {
