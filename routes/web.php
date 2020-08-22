@@ -41,7 +41,7 @@ Route::get($route.'/storage/test/{filename}', function ($filename)
         abort(404);
     }
 
-    $file = Storage::get($path);
+    $file = File::get($path);
     $type = File::mimeType($path);
 
     $response = Response::make($file);
