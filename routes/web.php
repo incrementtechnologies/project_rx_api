@@ -35,7 +35,7 @@ Route::get($route.'/storage/profiles/{filename}', function ($filename)
 });
 Route::get($route.'/storage/test/{filename}', function ($filename)
 {
-    $path = storage_path('/app/images/' . $filename);
+    $path = storage_path('app/images/' . $filename);
 
     if (!File::exists($path)) {
         abort(404);
