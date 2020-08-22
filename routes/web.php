@@ -12,7 +12,7 @@
 */
 $route = env('PACKAGE_ROUTE', '');
 Route::get('/', function () {
-    return "heel";//view('welcome');
+    return "hello";//view('welcome');
 });
 /*
   Accessing uploaded files
@@ -20,6 +20,22 @@ Route::get('/', function () {
 Route::get($route.'/storage/profiles/{filename}', function ($filename)
 {
     $path = storage_path('/app/profiles/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+Route::get($route.'/storage/image/{filename}', function ($filename)
+{
+    $path = storage_path('/app/images/' . $filename);
 
     if (!File::exists($path)) {
         abort(404);
