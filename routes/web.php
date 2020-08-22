@@ -33,7 +33,7 @@ Route::get($route.'/storage/profiles/{filename}', function ($filename)
 
     return $response;
 });
-Route::get($route.'/storage/image/{filename}', function ($filename)
+Route::get($route.'/storage/test/{filename}', function ($filename)
 {
     $path = storage_path('/app/images/' . $filename);
 
@@ -47,7 +47,7 @@ Route::get($route.'/storage/image/{filename}', function ($filename)
     $response = Response::make($file, 200);
     $response->header("Content-Type", $type);
 
-    return $response;
+    return $path;
 });
 Route::get($route.'/storage/logo/{filename}', function ($filename)
 {
