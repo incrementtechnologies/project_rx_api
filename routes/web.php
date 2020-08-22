@@ -41,11 +41,11 @@ Route::get($route.'/storage/test/{filename}', function ($filename)
         abort(404);
     }
 
-    $file = File::get($path);
+    $file = Storage::get($path, 200);
     $type = File::mimeType($path);
 
     $response = Response::make($file);
-    $response->header("Content-Type", 'image/jpg');
+    $response->header("Content-Type", $type);
 
     return $response;
 });
