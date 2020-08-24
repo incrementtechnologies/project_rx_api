@@ -29,6 +29,7 @@ class APIController extends Controller
     Website: www.payhiram.ph
   */
   protected $model = NULL;
+  protected $currency = array('PHP', 'USD');
   protected $foreignTable = [];
   protected $editableForeignTable = array();
   protected $requiredForeignTable = array();
@@ -41,20 +42,15 @@ class APIController extends Controller
   );
 
   protected $whiteListedDomain = array(
-    'https://payhiram.ph/',
-    'https://www.payhiram.ph/',
-    'http://www.payhiram.ph/',
-    'http://payhiram.ph/',
-    'http://localhost:8001/',
-    'com.payhiram'
+    'https://runwayexpress.co.uk/',
   );
 
   protected $whiteListedDomainOrigin = array(
-    'https://payhiram.ph',
-    'https://www.payhiram.ph',
-    'http://www.payhiram.ph',
-    'http://payhiram.ph',
-    'com.payhiram',
+    'https://runwayexpress.co.uk',
+    'https://www.runwayexpress.co.uk',
+    'http://www.runwayexpress.co.uk',
+    'http://runwayexpress.co.uk',
+    'com.runwayexpress',
     'http://localhost:8001'
   );
 
@@ -583,6 +579,21 @@ class APIController extends Controller
       $result[0]['information'] = app('Increment\Account\Http\AccountInformationController')->getAccountInformation($accountId);
       $result[0]['billing'] = app('Increment\Account\Http\BillingInformationController')->getBillingInformation($accountId);
       return $result[0];
+    }else{
+      return null;
+    }
+  }
+
+  public function retrieveNameOnly($accountId){
+    $result = app('Increment\Account\Http\AccountController')->retrieveById($accountId);
+    if(sizeof($result) > 0){
+      $result[0]['information'] = app('Increment\Account\Http\AccountInformationController')->getAccountInformation($accountId);
+      $name = null;
+      if($result[0]['information'] != null && $result[0]['information']['first_name'] !== null && $result[0]['information']['last_name'] != null){
+        $name = $result[0]['information']['first_name'].' '.$result[0]['information']['last_name'];
+        return $name;
+      }
+      return $result[0]['username'];
     }else{
       return null;
     }
