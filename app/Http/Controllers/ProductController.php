@@ -58,7 +58,8 @@ class ProductController extends APIController
                 ->leftJoin('locations', 'products.account_id',"=","locations.account_id")
                 ->distinct("products.merchant_id")
                 ->where($condition['column'],$condition['value'])
-                ->limit($request['limit'])->get();
+                ->limit($request['limit'])
+                ->offset($request['offset'])->get();
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
                 $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
@@ -80,7 +81,8 @@ class ProductController extends APIController
         $result = Product::select('products.id', 'products.account_id','products.merchant_id','products.category','products.title', 'products.description','locations.latitude', 'locations.longitude', 'locations.route')
             ->leftJoin('locations', 'products.account_id',"=","locations.account_id")
             ->where("status","featured")
-            ->limit($modifiedrequest['limit'])->get();
+            ->limit($modifiedrequest['limit'])
+            ->offset($request['offset'])->get();
         for($i=0; $i<count($result); $i++){
             $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
             $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
