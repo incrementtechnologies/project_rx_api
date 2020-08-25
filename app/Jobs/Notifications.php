@@ -13,6 +13,7 @@ use App\Events\MessageGroup;
 use App\Events\SystemNotification;
 use App\Events\Orders;
 use App\Events\Call;
+use App\Events\Rider;
 use Pusher\Pusher;
 class Notifications implements ShouldQueue
 {
@@ -69,6 +70,9 @@ class Notifications implements ShouldQueue
                 break;
             case 'call':
                 broadcast(new Call($this->data));
+              break;
+            case 'rider':
+                broadcast(new Rider($this->data));
               break;
             default:
                 # code...

@@ -12,7 +12,7 @@
 */
 $route = env('PACKAGE_ROUTE', '');
 Route::get('/', function () {
-    return "heel";//view('welcome');
+    return "hello";//view('welcome');
 });
 /*
   Accessing uploaded files
@@ -29,6 +29,22 @@ Route::get($route.'/storage/profiles/{filename}', function ($filename)
     $type = File::mimeType($path);
 
     $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+Route::get($route.'/storage/test/{filename}', function ($filename)
+{
+    $path = storage_path('app/images/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = Storage::get($path, 200);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file);
     $response->header("Content-Type", $type);
 
     return $response;
@@ -77,6 +93,7 @@ Route::post($route.'/user', 'AuthenticateController@getAuthenticatedUser');
 Route::post($route.'/refresh', 'AuthenticateController@refreshToken');
 Route::post($route.'/invalidate', 'AuthenticateController@deauthenticate');
 Route::post($route.'/googlelogin', 'AuthenticateController@googleLogin');
+Route::post($route.'/broadcast_auth', 'AuthenticateController@broadcastAuth');
 Route::post($route.'/auth', function () {
     return true;
 });
@@ -121,5 +138,11 @@ Route::post($route.'categories', $controller."getCategories");
 // Google Place
 $route = env('PACKAGE_ROUTE', '').'/google_places/';
 $controller = 'GooglePlaceController@';
+Route::post($route.'search', $controller."search");
+
+
+// Rider Place
+$route = env('PACKAGE_ROUTE', '').'/riders/';
+$controller = 'RiderController@';
 Route::post($route.'search', $controller."search");
 
