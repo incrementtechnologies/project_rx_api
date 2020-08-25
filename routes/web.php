@@ -122,6 +122,7 @@ Route::post($route.'update', $controller."update");
 Route::post($route.'delete', $controller."delete");
 Route::get($route.'test', $controller.'test');
 
+//Dashboard Functions Controller
 $route = env('PACKAGE_ROUTE', '').'/dashboard/';
 $controller = 'ProductController@';
 Route::post($route.'category', $controller."retrieveByCategory");
