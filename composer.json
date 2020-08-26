@@ -60,7 +60,7 @@
             "Increment\\Imarket\\Delivery\\": "packages/increment/imarket/delivery/src/",
             "Increment\\Imarket\\Location\\": "packages/increment/imarket/location/src/",
             "Increment\\Finance\\": "packages/increment/finance/src/",
-            "Increment\\Finance\\FundTransferCharge\\": "packages/increment/finance/fundtranfercharge/src/"
+            "Increment\\Finance\\Transfer\\": "packages/increment/finance/transfer/src/"
         }
     },
     "autoload-dev": {
