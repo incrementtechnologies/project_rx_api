@@ -180,7 +180,7 @@ return [
         //Finance Provider
         Increment\Finance\FinanceProvider::class,
         Increment\Finance\Transfer\TransferServiceProvider::class,
-        // Increment\Imarket\Coupon\CouponServiceProvider::class,
+        Increment\Imarket\Coupon\CouponServiceProvider::class,
         Increment\Imarket\Cart\CartServiceProvider::class,
         Increment\Imarket\Merchant\MerchantServiceProvider::class,
         Increment\Imarket\Location\LocationServiceProvider::class,
