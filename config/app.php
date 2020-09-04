@@ -173,12 +173,14 @@ return [
         Increment\Common\Invitation\InvitationServiceProvider::class,
         Increment\Common\System\SystemNotificationServiceProvider::class,
         Increment\Common\Image\ImageServiceProvider::class,
+        Increment\Common\Scope\ScopeServiceProvider::class,
         Increment\Imarket\Bundled\BundledServiceProvider::class,
         //Ratings Provider
         Increment\Common\Rating\RatingServiceProvider::class,
         //Finance Provider
         Increment\Finance\FinanceProvider::class,
-        // Increment\Imarket\Coupon\CouponServiceProvider::class,
+        Increment\Finance\Transfer\TransferServiceProvider::class,
+        Increment\Imarket\Coupon\CouponServiceProvider::class,
         Increment\Imarket\Cart\CartServiceProvider::class,
         Increment\Imarket\Merchant\MerchantServiceProvider::class,
         Increment\Imarket\Location\LocationServiceProvider::class,
