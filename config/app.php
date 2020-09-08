@@ -188,6 +188,7 @@ return [
         Increment\Imarket\Shipping\ShippingServiceProvider::class,
         Increment\Imarket\Installment\InstallmentServiceProvider::class,
         Increment\Imarket\Rental\RentalServiceProvider::class,
+        Increment\Imarket\Featured\FeaturedServiceProvider::class,
         Increment\Imarket\Delivery\DeliveryServiceProvider::class,
         // Increment\Imarket\Wishlist\WishlistServiceProvider::class,
         
