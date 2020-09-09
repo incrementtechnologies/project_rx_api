@@ -192,6 +192,8 @@ return [
         Increment\Imarket\Delivery\DeliveryServiceProvider::class,
         // Increment\Imarket\Wishlist\WishlistServiceProvider::class,
         
+        Increment\Messenger\MessengerServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
