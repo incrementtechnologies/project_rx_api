@@ -65,7 +65,7 @@ class ProductController extends APIController
                     if ($result[$i]["distance"] <= 30){
                         $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                         $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                        array_push($dashboardarr, $result[i]);
+                        array_push($dashboardarr, $result[$i]);
                     }
             }
             
@@ -91,7 +91,8 @@ class ProductController extends APIController
             if ($result[$i]["distance"] <= 30){
                 $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                 $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                array_push($dashboardarr, $result[i]);            }
+                array_push($dashboardarr, $result[$i]);            
+            }
         }
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $dashboard["data"] = $dashboardarr;
@@ -123,7 +124,7 @@ class ProductController extends APIController
                 if ($result[$i]["distance"] <= 30){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($dashboardarr, $result[i]);                }
+                    array_push($dashboardarr, $result[$i]);                }
             }
         }else{
             //"merchants.code","merchants.account_id","locations.latitude","locations.longitude","locations.route","locations.locality"
@@ -138,7 +139,7 @@ class ProductController extends APIController
                 if ($result[$i]["distance"] <= 30){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($dashboardarr, $result[i]);                }
+                    array_push($dashboardarr, $result[$i]);                }
             }
             //$result = Product::select('account_id','merchant_id','category')->where($condition['column'],$condition['value'])->limit($request['limit'])->offset($request['offset'])->orderBy($request['sort'], 'desc')->get();
             //$result[0]["location"] = Location::select('latitude', 'longitude', 'route')->where("account_id", $result[0]["account_id"])->get();
