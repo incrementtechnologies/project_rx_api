@@ -44,6 +44,7 @@
             "Increment\\Common\\Invitation\\": "packages/increment/common/invitation/src/",
             "Increment\\Common\\Tutorial\\": "packages/increment/common/tutorial/src/",
             "Increment\\Common\\System\\": "packages/increment/common/system/src/",
+            "Increment\\Common\\Scope\\": "packages/increment/common/scope/src/",
             "Increment\\Messenger\\": "packages/increment/messenger/src/",
             "Increment\\Common\\Notification\\": "packages/increment/common/notification/src/",
             "Increment\\Account\\": "packages/increment/account/src/",
@@ -60,7 +61,8 @@
             "Increment\\Imarket\\Delivery\\": "packages/increment/imarket/delivery/src/",
             "Increment\\Imarket\\Location\\": "packages/increment/imarket/location/src/",
             "Increment\\Imarket\\Featured\\": "packages/increment/imarket/featured/src",
-            "Increment\\Finance\\": "packages/increment/finance/src/"
+            "Increment\\Finance\\": "packages/increment/finance/src/",
+            "Increment\\Finance\\Transfer\\": "packages/increment/finance/transfer/src/"
         }
     },
     "autoload-dev": {

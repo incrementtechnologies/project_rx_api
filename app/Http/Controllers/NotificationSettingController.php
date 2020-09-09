@@ -186,6 +186,11 @@ class NotificationSettingController extends APIController
     return (sizeof($result) > 0) ? $result[0] : null;
   }
 
+  public function getByAccountIdAndCode($accountId, $code){
+    $result = NotificationSetting::where('account_id', '=', $accountId)->where('code', '=', $code)->get();
+    return sizeof($result) > 0 ? $result[0] : null;
+  }
+
   public function blockedAccount(Request $request){
     $data = $request->all();
     NotificationSetting::where('account_id', '=', $data['account_id'])->update(array(
