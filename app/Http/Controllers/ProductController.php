@@ -163,6 +163,7 @@ class ProductController extends APIController
      */
     public function retrieveByShop(Request $request){
         $dashboardarr = [];
+        $datatemp = [];
         $conditions = $request['condition'];
         $modifiedrequest = new Request([]);
         if (isset($request["id"])){
@@ -188,8 +189,10 @@ class ProductController extends APIController
                 if ($result[$i]["distance"] <= 30){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($dashboardarr, $result[$i]);                }
+                    array_push($datatemp, $result[$i]);
+                }
             }
+            array_push($dashboardarr, $datatemp);
         }
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $dashboard["data"] = $dashboardarr;
