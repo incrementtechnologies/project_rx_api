@@ -71,9 +71,10 @@ class Notifications implements ShouldQueue
                 break;
             case 'call':
                 broadcast(new Call($this->data));
-              break;
+                break;
             case 'rider':
                 broadcast(new Rider($this->data));
+                break;
             case 'location_sharing':
                 broadcast(new LocationSharing($this->data));
               break;
