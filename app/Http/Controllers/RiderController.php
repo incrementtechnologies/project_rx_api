@@ -19,4 +19,10 @@ class RiderController extends APIController
         Notifications::dispatch('rider', $data);
         return $this->response();
     }
+
+    public function locationSharing(Request $request){
+        $data = $request->all();
+        Notifications::dispatch('location_sharing', $data);
+        return $this->response();
+    }
 }

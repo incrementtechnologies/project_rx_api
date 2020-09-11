@@ -14,6 +14,7 @@ use App\Events\SystemNotification;
 use App\Events\Orders;
 use App\Events\Call;
 use App\Events\Rider;
+use App\Events\LocationSharing;
 use Pusher\Pusher;
 class Notifications implements ShouldQueue
 {
@@ -73,6 +74,8 @@ class Notifications implements ShouldQueue
               break;
             case 'rider':
                 broadcast(new Rider($this->data));
+            case 'location_sharing':
+                broadcast(new LocationSharing($this->data));
               break;
             default:
                 # code...
