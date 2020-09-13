@@ -12,7 +12,7 @@
 */
 $route = env('PACKAGE_ROUTE', '');
 Route::get('/', function () {
-    return "hello";//view('welcome');
+    return view('email.receiptofficial');//view('welcome');
 });
 /*
   Accessing uploaded files
