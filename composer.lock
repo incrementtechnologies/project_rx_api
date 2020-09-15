@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1755fdee726e7d4baf5d147619670df9",
+    "content-hash": "66408d4e2a5dbd1854a1acfa688e0e72",
     "packages": [
         {
             "name": "adyen/php-api-library",
@@ -54,16 +54,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.149.1",
+            "version": "3.150.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8630a2426622d003e27382e2bd129cde5678ae85"
+                "reference": "4c4e1cef09a6b510eae7a871ec394d124b5005fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8630a2426622d003e27382e2bd129cde5678ae85",
-                "reference": "8630a2426622d003e27382e2bd129cde5678ae85",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4c4e1cef09a6b510eae7a871ec394d124b5005fe",
+                "reference": "4c4e1cef09a6b510eae7a871ec394d124b5005fe",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +135,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-08-14T18:11:00+00:00"
+            "time": "2020-08-24T18:17:53+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1221,16 +1221,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.142",
+            "version": "v0.143",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "3baf0a665cd08975314214b075f28765c97282ae"
+                "reference": "22f5d97f1fb83a9de553319354b36b829549975a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/3baf0a665cd08975314214b075f28765c97282ae",
-                "reference": "3baf0a665cd08975314214b075f28765c97282ae",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/22f5d97f1fb83a9de553319354b36b829549975a",
+                "reference": "22f5d97f1fb83a9de553319354b36b829549975a",
                 "shasum": ""
             },
             "require": {
@@ -1254,7 +1254,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2020-07-28T00:24:58+00:00"
+            "time": "2020-08-23T00:24:45+00:00"
         },
         {
             "name": "google/auth",
@@ -1565,7 +1565,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2020-07-06 19:03:15"
+            "time": "2020-07-06T19:03:15+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2045,20 +2045,20 @@
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "1.0.25",
+            "version": "1.0.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "d409b97a50bf85fbde30cbc9fc10237475e696ea"
+                "reference": "af7384a12f7cd7d08183390d930c9d0ec629c990"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/d409b97a50bf85fbde30cbc9fc10237475e696ea",
-                "reference": "d409b97a50bf85fbde30cbc9fc10237475e696ea",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/af7384a12f7cd7d08183390d930c9d0ec629c990",
+                "reference": "af7384a12f7cd7d08183390d930c9d0ec629c990",
                 "shasum": ""
             },
             "require": {
-                "aws/aws-sdk-php": "^3.0.0",
+                "aws/aws-sdk-php": "^3.20.0",
                 "league/flysystem": "^1.0.40",
                 "php": ">=5.5.0"
             },
@@ -2088,7 +2088,7 @@
                 }
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
-            "time": "2020-06-02T18:41:58+00:00"
+            "time": "2020-08-22T08:43:01+00:00"
         },
         {
             "name": "league/oauth1-client",
@@ -2155,16 +2155,16 @@
         },
         {
             "name": "luigel/laravel-paymongo",
-            "version": "v1.2.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/luigel/laravel-paymongo.git",
-                "reference": "f65b8fb300116f1d68cd55fee9fab014c43a8ac3"
+                "reference": "79ba6ef70266023ec07359b6cd7d857c641eb334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/luigel/laravel-paymongo/zipball/f65b8fb300116f1d68cd55fee9fab014c43a8ac3",
-                "reference": "f65b8fb300116f1d68cd55fee9fab014c43a8ac3",
+                "url": "https://api.github.com/repos/luigel/laravel-paymongo/zipball/79ba6ef70266023ec07359b6cd7d857c641eb334",
+                "reference": "79ba6ef70266023ec07359b6cd7d857c641eb334",
                 "shasum": ""
             },
             "require": {
@@ -2216,7 +2216,7 @@
                 "payment-gateway",
                 "paymongo"
             ],
-            "time": "2020-05-27T12:56:04+00:00"
+            "time": "2020-04-21T06:11:21+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2478,16 +2478,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.8.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "8c58eb4cd4f3883f82611abeac2efbc3dbed787e"
+                "reference": "aaee038b912e567780949787d5fe1977be11a778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8c58eb4cd4f3883f82611abeac2efbc3dbed787e",
-                "reference": "8c58eb4cd4f3883f82611abeac2efbc3dbed787e",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/aaee038b912e567780949787d5fe1977be11a778",
+                "reference": "aaee038b912e567780949787d5fe1977be11a778",
                 "shasum": ""
             },
             "require": {
@@ -2495,7 +2495,7 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "ircmaxell/php-yacc": "^0.0.6",
+                "ircmaxell/php-yacc": "^0.0.7",
                 "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
             },
             "bin": [
@@ -2504,7 +2504,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.8-dev"
+                    "dev-master": "4.9-dev"
                 }
             },
             "autoload": {
@@ -2526,7 +2526,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2020-08-09T10:23:20+00:00"
+            "time": "2020-08-18T19:48:01+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3884,16 +3884,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.47.0",
+            "version": "v7.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "b51656cb398d081fcee53a76f6edb8fd5c1a5306"
+                "reference": "db6229bff448f7f3bf7f6aee112d5d9ba34ca4ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/b51656cb398d081fcee53a76f6edb8fd5c1a5306",
-                "reference": "b51656cb398d081fcee53a76f6edb8fd5c1a5306",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/db6229bff448f7f3bf7f6aee112d5d9ba34ca4ba",
+                "reference": "db6229bff448f7f3bf7f6aee112d5d9ba34ca4ba",
                 "shasum": ""
             },
             "require": {
@@ -3937,7 +3937,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2020-08-13T22:35:56+00:00"
+            "time": "2020-08-19T22:48:20+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6939,6 +6939,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -7747,5 +7748,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }

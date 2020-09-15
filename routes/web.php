@@ -146,3 +146,15 @@ $route = env('PACKAGE_ROUTE', '').'/riders/';
 $controller = 'RiderController@';
 Route::post($route.'search', $controller."search");
 
+
+// Broadcast Place
+$route = env('PACKAGE_ROUTE', '').'/broadcasts/';
+$controller = 'RiderController@';
+Route::post($route.'location_sharing', $controller."locationSharing");
+
+// Custom Messenger Group Controller
+$route = env('PACKAGE_ROUTE', '').'/custom_messenger_groups/';
+$controller = 'MessengerGroupController@';
+Route::post($route.'create', $controller."create");
+Route::post($route.'retrieve', $controller."retrieve");
+

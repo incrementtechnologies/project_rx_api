@@ -1,4 +1,11 @@
 <?php return array (
+  'nesbot/carbon' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Carbon\\Laravel\\ServiceProvider',
+    ),
+  ),
   'beyondcode/laravel-websockets' => 
   array (
     'providers' => 
@@ -8,13 +15,6 @@
     'aliases' => 
     array (
       'WebSocketRouter' => 'BeyondCode\\LaravelWebSockets\\Facades\\WebSocketRouter',
-    ),
-  ),
-  'fideloper/proxy' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
   'intervention/image' => 
@@ -33,24 +33,6 @@
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    ),
-  ),
-  'luigel/laravel-paymongo' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Luigel\\Paymongo\\PaymongoServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Paymongo' => 'Luigel\\Paymongo\\Facades\\PaymongoFacade',
-    ),
-  ),
-  'nesbot/carbon' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
   'simplesoftwareio/simple-qrcode' => 
@@ -73,6 +55,24 @@
     'aliases' => 
     array (
       'QRCode' => 'LaravelQRCode\\Facades\\QRCode',
+    ),
+  ),
+  'fideloper/proxy' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    ),
+  ),
+  'luigel/laravel-paymongo' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Luigel\\Paymongo\\PaymongoServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Paymongo' => 'Luigel\\Paymongo\\Facades\\PaymongoFacade',
     ),
   ),
 );
