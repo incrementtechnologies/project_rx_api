@@ -156,5 +156,4 @@ Route::post($route.'location_sharing', $controller."locationSharing");
 $route = env('PACKAGE_ROUTE', '').'/custom_messenger_groups/';
 $controller = 'MessengerGroupController@';
 Route::post($route.'create', $controller."create");
-Route::post($route.'retrieve', $controller."retrieve");
 
