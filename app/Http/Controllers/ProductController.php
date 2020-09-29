@@ -184,7 +184,7 @@ class ProductController extends APIController
         }else{
             $result = DB::table('merchants as T1')
                 ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.latitude","T2.longitude","T2.route","T2.locality"])
-                ->leftJoin('locations as T2', 'T2.account_id',"=","T1.account_id")
+                ->leftJoin('locations as T2', 'T2.merchant_id',"=","T1.id")
                 ->where('T2.deleted_at', '=', null)
                 ->where('T1.deleted_at', '=', null)
                 ->distinct("T1.id")
