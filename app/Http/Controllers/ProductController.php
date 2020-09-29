@@ -207,10 +207,9 @@ class ProductController extends APIController
             }
             
         }
-        $this->response['data'] = Arr::sort($datatemp, funtion($merchant){
-            return $merchant->distance;
-        });
-        return $this->response();
+
+        $distance = array_column($datatemp, 'distance');
+        $datatemp = array_multisort($distance, SORT_ASC, $datatemp);
         array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $dashboard["data"] = $dashboardarr; 
