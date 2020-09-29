@@ -190,13 +190,13 @@ class ProductController extends APIController
                 ->distinct("T1.id")
                 ->get();
                 // sort disabled
-                
+
                 // ->limit($request['limit'])
                 // ->offset($request['offset'])
             $result = json_decode($result, true);
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
-                if ($result[$i]["distance"] <= 30){
+                if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
                     array_push($datatemp, $result[$i]);
