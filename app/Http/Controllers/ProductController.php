@@ -188,10 +188,11 @@ class ProductController extends APIController
                 ->where('T2.deleted_at', '=', null)
                 ->where('T1.deleted_at', '=', null)
                 ->distinct("T1.id")
-                ->limit($request['limit'])
-                ->offset($request['offset'])
                 ->get();
                 // sort disabled
+                
+                // ->limit($request['limit'])
+                // ->offset($request['offset'])
             $result = json_decode($result, true);
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
