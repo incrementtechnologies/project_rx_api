@@ -170,18 +170,18 @@ class ProductController extends APIController
         $conditions = $request['condition'];
         $modifiedrequest = new Request([]);
         if (isset($request["id"])){
-            $result = Merchant::select()
-                ->where("merchants.id",$request['id'])
-                ->leftJoin('locations as T2','merchants.account_id',"=", "locations.account_id")
+            $result = DB::table('merchants as T1')
+                ->leftJoin('locations as T2','T2.merchant_id',"=", "T1.id")
+                ->where("T1.id", '=', $request['id'])
                 ->where('T2.deleted_at', '=', null)
-                ->where('merchants.deleted_at', '=', null)
+                ->where('T1.deleted_at', '=', null)
                 ->get();
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
                 if ($result[$i]["distance"] <= 30){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($dashboardarr, $result[$i]);                }
+                    $datatemp[] = $result[$i];                }
             }
         }else{
             $result = DB::table('merchants as T1')
