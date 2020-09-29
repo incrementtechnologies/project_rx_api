@@ -206,7 +206,10 @@ class ProductController extends APIController
             }
             
         }
-        $this->response['data'] = $datatemp;
+        
+        $collection = new Collection($datatemp);
+        $collection->sortBy('distance');
+        $this->response['data'] = $$collection->sortBy('distance');
         return $this->response();
         $collection = new Collection($datatemp);
         $collection->sortBy('distance');
