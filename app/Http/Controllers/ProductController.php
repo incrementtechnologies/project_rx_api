@@ -14,6 +14,7 @@ use Increment\Common\Rating\Models\Rating;
 use Increment\Imarket\Cart\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class ProductController extends APIController
 {
@@ -205,7 +206,7 @@ class ProductController extends APIController
             array_push($dashboardarr, $datatemp);
         }
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
-        $dashboard["data"] = collect($dashboardarr)->soryBy('distance');
+        $dashboard["data"] = new Collection($dashboardarr)->soryBy('distance');
         return $dashboard;
     }
 
