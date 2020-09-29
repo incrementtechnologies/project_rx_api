@@ -190,7 +190,8 @@ class ProductController extends APIController
                 ->distinct("T1.id")
                 ->limit($request['limit'])
                 ->offset($request['offset'])
-                ->orderBy($request['sort'], 'desc')->get();
+                ->get();
+                // sort disabled
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
                 if ($result[$i]["distance"] <= 30){
