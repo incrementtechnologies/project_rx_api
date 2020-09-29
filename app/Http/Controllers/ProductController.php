@@ -205,7 +205,7 @@ class ProductController extends APIController
             array_push($dashboardarr, $datatemp);
         }
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
-        $dashboard["data"] = $dashboardarr;
+        $dashboard["data"] = collect($dashboardarr)->soryBy('distance');
         return $dashboard;
     }
 
