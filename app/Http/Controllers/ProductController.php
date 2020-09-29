@@ -169,7 +169,10 @@ class ProductController extends APIController
         if (isset($request["id"])){
             $result = Merchant::select()
                 ->where("merchants.id",$request['id'])
-                ->leftJoin('locations','merchants.account_id',"=", "locations.account_id")->get();
+                ->leftJoin('locations as T2','merchants.account_id',"=", "locations.account_id")
+                ->where('T2.deleted_at', '=', null)
+                ->where('merchants.deleted_at', '=', null)
+                ->get();
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
                 if ($result[$i]["distance"] <= 30){
@@ -179,7 +182,9 @@ class ProductController extends APIController
             }
         }else{
             $result = Merchant::select("merchants.id", "merchants.code","merchants.account_id", "merchants.name", "merchants.prefix", "merchants.logo", "locations.latitude","locations.longitude","locations.route","locations.locality")
-                ->leftJoin('locations', 'merchants.account_id',"=","locations.account_id")
+                ->leftJoin('locations as T2', 'merchants.account_id',"=","locations.account_id")
+                ->where('T2.deleted_at', '=', null)
+                ->where('merchants.deleted_at', '=', null)
                 ->distinct("merchants.id")
                 ->limit($request['limit'])
                 ->offset($request['offset'])
