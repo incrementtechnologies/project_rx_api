@@ -203,11 +203,13 @@ class ProductController extends APIController
                     array_push($datatemp, $result[$i]);
                 }
             }
-            array_push($dashboardarr, $datatemp);
+            
         }
+        $collection = new Collection($datatemp);
+        $collection->sortBy('distance', SORT_NUMERIC, false);
+        array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
-        $collection = new Collection($dashboardarr);
-        $dashboard["data"] = $collection->sortBy('distance', SORT_NUMERIC, false)->toArray();
+        $dashboard["data"] = $dashboardarr; 
         return $dashboard;
     }
 
