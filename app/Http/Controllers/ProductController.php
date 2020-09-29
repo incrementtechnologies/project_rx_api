@@ -207,7 +207,7 @@ class ProductController extends APIController
             
         }
         $collection = new Collection($datatemp);
-        $collection->sortBy('distance', SORT_NUMERIC, false);
+        $collection->sortBy('distance');
         array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $dashboard["data"] = $dashboardarr; 
