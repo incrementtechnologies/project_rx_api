@@ -13,6 +13,7 @@ use Increment\Common\Rating\Http\RatingController;
 use Increment\Common\Rating\Models\Rating;
 use Increment\Imarket\Cart\Models\Cart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends APIController
 {
@@ -181,11 +182,12 @@ class ProductController extends APIController
                     array_push($dashboardarr, $result[$i]);                }
             }
         }else{
-            $result = Merchant::select("merchants.id", "merchants.code","merchants.account_id", "merchants.name", "merchants.prefix", "merchants.logo", "locations.latitude","locations.longitude","locations.route","locations.locality")
-                ->leftJoin('locations as T2', 'merchants.account_id',"=","locations.account_id")
+            $result = DB::table('merchants as T1')
+                ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.latitude","T2.longitude","T2.route","T2.locality"])
+                ->leftJoin('locations as T2', 'T2.account_id',"=","T1.account_id")
                 ->where('T2.deleted_at', '=', null)
-                ->where('merchants.deleted_at', '=', null)
-                ->distinct("merchants.id")
+                ->where('T1.deleted_at', '=', null)
+                ->distinct("T1.id")
                 ->limit($request['limit'])
                 ->offset($request['offset'])
                 ->orderBy($request['sort'], 'desc')->get();
