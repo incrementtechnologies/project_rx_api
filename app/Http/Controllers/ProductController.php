@@ -206,12 +206,8 @@ class ProductController extends APIController
             }
             
         }
-
-        $collection = new Collection($datatemp);
-        $this->response['data'] = $collection->sortBy('distance', SORT_NUMERIC);
+        $this->response['data'] = $datatemp;
         return $this->response();
-        $collection = new Collection($datatemp);
-        $collection->sortBy('distance');
         array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $dashboard["data"] = $dashboardarr; 
