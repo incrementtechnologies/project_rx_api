@@ -200,10 +200,11 @@ class ProductController extends APIController
                 if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($datatemp, $result[$i]);
+                    // array_push($datatemp, $result[$i]);
+                    $dashboardarr[] = $result[$i];
                 }
             }
-            array_push($dashboardarr, $datatemp);
+            // array_push($dashboardarr, $datatemp);
         }
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $collection = new Collection($dashboardarr);
