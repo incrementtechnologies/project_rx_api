@@ -15,6 +15,7 @@ use Increment\Imarket\Cart\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 
 class ProductController extends APIController
 {
@@ -206,7 +207,9 @@ class ProductController extends APIController
             }
             
         }
-        $this->response['data'] = $datatemp;
+        $this->response['data'] = Arr::sort($datatemp, funtion($merchant){
+            return $merchant->distance;
+        });
         return $this->response();
         array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
