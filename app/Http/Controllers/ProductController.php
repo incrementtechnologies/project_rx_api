@@ -192,6 +192,7 @@ class ProductController extends APIController
                 ->offset($request['offset'])
                 ->get();
                 // sort disabled
+            $result = json_decode($result, true);
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
                 if ($result[$i]["distance"] <= 30){
