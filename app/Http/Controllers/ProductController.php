@@ -209,7 +209,7 @@ class ProductController extends APIController
         }
 
         $distance = array_column($datatemp, 'distance');
-        $datatemp = array_multisort($distance, SORT_ASC, $datatemp);
+        array_multisort($distance, SORT_ASC, $datatemp);
         array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
         $dashboard["data"] = $dashboardarr; 
