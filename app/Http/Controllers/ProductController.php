@@ -228,12 +228,11 @@ class ProductController extends APIController
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->get();
-        for($i=0; $i<count($result); $i++){
-          $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
-          if ($result[$i]["distance"] <= 30){
-            $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
-            $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-            $datatemp[] = $result[$i];                }
+        if (count($result) > 0) {
+          $result[0]->distance = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[0]->latitude, $result[0]->longitude);
+          $result[0]->rating = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[0]->account_id);
+          $result[0]->image = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[0]->id, "featured");
+          $datatemp[] = $result[0];
         }
       }else{
         $result = DB::table('merchants as T1')
