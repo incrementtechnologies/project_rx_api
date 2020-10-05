@@ -172,8 +172,10 @@ return [
         Increment\Account\AccountServiceProvider::class,
         Increment\Common\Invitation\InvitationServiceProvider::class,
         Increment\Common\System\SystemNotificationServiceProvider::class,
+        Increment\Common\Notification\NotificationServiceProvider::class,
         Increment\Common\Image\ImageServiceProvider::class,
         Increment\Common\Scope\ScopeServiceProvider::class,
+        Increment\Common\Payload\PayloadServiceProvider::class,
         Increment\Imarket\Bundled\BundledServiceProvider::class,
         //Ratings Provider
         Increment\Common\Rating\RatingServiceProvider::class,

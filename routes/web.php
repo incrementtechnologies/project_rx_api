@@ -128,6 +128,7 @@ $controller = 'ProductController@';
 Route::post($route.'category', $controller."retrieveByCategory");
 Route::post($route.'featured', $controller."retrieveByFeatured");
 Route::post($route.'shops', $controller."retrieveByShop");
+Route::post($route.'shops_in_array', $controller."retrieveByShopInArray");
 Route::post($route.'categories', $controller."getCategories");
 // //Status Change for Package
 // $route = env('PACKAGE_ROUTE', '').'/checkouts/';
@@ -156,5 +157,4 @@ Route::post($route.'location_sharing', $controller."locationSharing");
 $route = env('PACKAGE_ROUTE', '').'/custom_messenger_groups/';
 $controller = 'MessengerGroupController@';
 Route::post($route.'create', $controller."create");
-Route::post($route.'retrieve', $controller."retrieve");
 
