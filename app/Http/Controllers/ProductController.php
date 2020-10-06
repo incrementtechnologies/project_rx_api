@@ -13,6 +13,9 @@ use Increment\Common\Rating\Http\RatingController;
 use Increment\Common\Rating\Models\Rating;
 use Increment\Imarket\Cart\Models\Cart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 
 class ProductController extends APIController
 {
@@ -167,37 +170,109 @@ class ProductController extends APIController
         $conditions = $request['condition'];
         $modifiedrequest = new Request([]);
         if (isset($request["id"])){
-            $result = Merchant::select()
-                ->where("merchants.id",$request['id'])
-                ->leftJoin('locations','merchants.account_id',"=", "locations.account_id")->get();
+            $result = DB::table('merchants as T1')
+                ->leftJoin('locations as T2','T2.merchant_id',"=", "T1.id")
+                ->where("T1.id", '=', $request['id'])
+                ->where('T2.deleted_at', '=', null)
+                ->where('T1.deleted_at', '=', null)
+                ->get();
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
                 if ($result[$i]["distance"] <= 30){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($dashboardarr, $result[$i]);                }
+                    $result[$i]["preparation_time"] = $this->getAverageMerchantPrepTime($result[$i]["account_id"]);
+                    $datatemp[] = $result[$i];                }
             }
         }else{
-            $result = Merchant::select("merchants.id", "merchants.code","merchants.account_id", "merchants.name", "merchants.prefix", "merchants.logo", "locations.latitude","locations.longitude","locations.route","locations.locality")
-                ->leftJoin('locations', 'merchants.account_id',"=","locations.account_id")
-                ->distinct("merchants.id")
-                ->limit($request['limit'])
-                ->offset($request['offset'])
-                ->orderBy($request['sort'], 'desc')->get();
+            $result = DB::table('merchants as T1')
+                ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.latitude","T2.longitude","T2.route","T2.locality"])
+                ->leftJoin('locations as T2', 'T2.merchant_id',"=","T1.id")
+                ->where('T2.deleted_at', '=', null)
+                ->where('T1.deleted_at', '=', null)
+                ->distinct("T1.id")
+                ->get();
+                // sort disabled
+
+                // ->limit($request['limit'])
+                // ->offset($request['offset'])
+            $result = json_decode($result, true);
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
-                if ($result[$i]["distance"] <= 30){
+                if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
                     $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
+                    $result[$i]["preparation_time"] = $this->getAverageMerchantPrepTime($result[$i]["account_id"]);
                     $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-                    array_push($datatemp, $result[$i]);
+                    $datatemp[] = $result[$i];
+                    // array_push($datatemp, $result[$i]);
                 }
             }
-            array_push($dashboardarr, $datatemp);
+            
         }
+
+        $distance = array_column($datatemp, 'distance');
+        array_multisort($distance, SORT_ASC, $datatemp);
+        array_push($dashboardarr, $datatemp);
         $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
-        $dashboard["data"] = $dashboardarr;
+        $dashboard["data"] = $dashboardarr; 
         return $dashboard;
     }
 
-}
+    public function retrieveByShopInArray(Request $request){
+      $dashboardarr = [];
+      $datatemp = [];
+      $conditions = $request['condition'];
+      $modifiedrequest = new Request([]);
+      if (isset($request["id"])){
+        $result = DB::table('merchants as T1')
+          ->leftJoin('locations as T2','T2.merchant_id',"=", "T1.id")
+          ->where("T1.id", '=', $request['id'])
+          ->where('T2.deleted_at', '=', null)
+          ->where('T1.deleted_at', '=', null)
+          ->get();
+        if (count($result) > 0) {
+          $result[0]->distance = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[0]->latitude, $result[0]->longitude);
+          $result[0]->rating = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[0]->account_id);
+          $result[0]["preparation_time"] = $this->getAverageMerchantPrepTime($result[0]["account_id"]);
+          $result[0]->image = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[0]->id, "featured");
+          $datatemp[] = $result[0];
+        }
+      }else{
+        $result = DB::table('merchants as T1')
+          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.latitude","T2.longitude","T2.route","T2.locality"])
+          ->leftJoin('locations as T2', 'T2.merchant_id',"=","T1.id")
+          ->where('T2.deleted_at', '=', null)
+          ->where('T1.deleted_at', '=', null)
+          ->distinct("T1.id")
+          ->get();
+          // sort disabled
+
+          // ->limit($request['limit'])
+          // ->offset($request['offset'])
+        $result = json_decode($result, true);
+        for($i=0; $i<count($result); $i++){
+          $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
+          if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
+            $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
+            $result[$i]["preparation_time"] = $this->getAverageMerchantPrepTime($result[$i]["account_id"]);
+            $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
+            $datatemp[] = $result[$i];
+          }
+        }
+      }
+      $distance = array_column($datatemp, 'distance');
+      array_multisort($distance, SORT_ASC, $datatemp);
+      $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
+      $dashboard["data"] = $datatemp; 
+      return $dashboard;
+    }
+
+    //grab average merchant prep time
+    function getAverageMerchantPrepTime($merchant)
+    {
+        $merchantTime = Product::where('id','=', $merchant)->sum('preparation_time');
+        $merchantCount = Product::where('id', '=', $merchant)->count();
+        return $merchantTime/$merchantCount;
+    }
+  }
     
