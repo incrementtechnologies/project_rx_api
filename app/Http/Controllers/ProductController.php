@@ -235,7 +235,6 @@ class ProductController extends APIController
           $result[0]->rating = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[0]->account_id);
           $result[0]["preparation_time"] = $this->getAverageMerchantPrepTime($result[0]["account_id"]);
           $result[0]->image = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[0]->id, "featured");
-          $result[0]->preparation_time = Product::select('preparation_time')->where('id', '=', $result[0]->id)->get();
           $datatemp[] = $result[0];
         }
       }else{
