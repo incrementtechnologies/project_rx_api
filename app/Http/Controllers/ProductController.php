@@ -72,7 +72,7 @@ class ProductController extends APIController
         foreach ($conditions as $condition){
             $datatemp = [];
 
-            $result = Product::select('products.id','products.account_id','products.merchant_id','products.title', 'products.description','products.status','products.category', 'locations.latitude', 'locations.longitude', 'locations.route')
+            $result = Product::select('products.id','products.account_id','products.merchant_id','products.title', 'products.description','products.status','products.category', 'products.preparation_time', 'locations.latitude', 'locations.longitude', 'locations.route')
                 ->leftJoin('locations', 'products.account_id',"=","locations.account_id")
                 ->distinct("products.id")
                 ->where($condition['column'],$condition['value'])
@@ -113,7 +113,7 @@ class ProductController extends APIController
         $modifiedrequest = new Request([]);
         $modifiedrequest['limit'] = $request['limit'];
 
-        $result = Product::select('products.id', 'products.account_id','products.merchant_id','products.category','products.title', 'products.description','locations.latitude', 'locations.longitude', 'locations.route')
+        $result = Product::select('products.id', 'products.account_id','products.merchant_id','products.category','products.title', 'products.description', 'products.preparation_time', 'locations.latitude', 'locations.longitude', 'locations.route')
             ->leftJoin('locations', 'products.account_id',"=","locations.account_id")
             ->where("status","featured")
             ->distinct("products.id")
@@ -235,6 +235,7 @@ class ProductController extends APIController
           $result[0]->rating = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[0]->account_id);
           $result[0]["preparation_time"] = $this->getAverageMerchantPrepTime($result[0]["account_id"]);
           $result[0]->image = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[0]->id, "featured");
+          $result[0]->preparation_time = Product::select('preparation_time')->where('id', '=', $result[0]->id)->get();
           $datatemp[] = $result[0];
         }
       }else{
@@ -256,6 +257,7 @@ class ProductController extends APIController
             $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
             $result[$i]["preparation_time"] = $this->getAverageMerchantPrepTime($result[$i]["account_id"]);
             $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
+            $result[$i]['preparation_time'] = Product::select('preparation_time')->where('id', '=', $result[0]->id)->get();
             $datatemp[] = $result[$i];
           }
         }
