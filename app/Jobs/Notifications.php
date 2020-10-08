@@ -78,6 +78,9 @@ class Notifications implements ShouldQueue
             case 'location_sharing':
                 broadcast(new LocationSharing($this->data));
               break;
+            case 'account_status':
+                broadcast(new LocationSharing($this->data));
+              break;
             default:
                 # code...
                 break;
