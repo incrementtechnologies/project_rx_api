@@ -158,4 +158,5 @@ Route::post($route.'account_status', $controller."accountStatus");
 $route = env('PACKAGE_ROUTE', '').'/custom_messenger_groups/';
 $controller = 'MessengerGroupController@';
 Route::post($route.'create', $controller."create");
+Route::post($route.'custom_create', $controller."customCreate");
 

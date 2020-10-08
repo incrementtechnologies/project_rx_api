@@ -4,6 +4,8 @@
     <span class="thank-you-header">
         <h1 style="line-height: 125px;">Thank you for your order, {{$user->username}}!</h1>
         <label><b>Order # {{$dataReceipt['order_number']}}</b></label>
+        <label><b>Merchant Name: {{dataReceipt['merchant_name']}}</b></label>
+        <label><b>Date: {{dataReceipt['date']}}</b></label>
     </span>
     <span class="thank-you-item">
         <label><b>Products</b></label>
@@ -11,7 +13,7 @@
         <label><b>Price</b></label>
         <label><b>Total</b></label>
     </span>
-    @for($i = 0; $i < count($dataReceipt['templates']); $i++)
+<!--    @for($i = 0; $i < count($dataReceipt['templates']); $i++)
         <span class="thank-you-item">
             <label>Template: {{$dataReceipt['templates'][$i]['template']['title']}}</label>
             <label>1</label>
@@ -19,6 +21,7 @@
             <label>{{floatval($dataReceipt['templates'][$i]['price']) * 1}}</label>
         </span>
     @endfor
+-->
     @for($i = 0; $i < count($dataReceipt['products']); $i++)
         <span class="thank-you-item">
             <label>{{$dataReceipt['products'][$i]['product']['title']}}</label>
@@ -45,6 +48,12 @@
         <label>&nbsp;</label>
         <label>Subtotal</label>
         <label>PHP {{$dataReceipt['sub_total']}}</label>
+    </span>
+    <span class="thank-you-item">
+        <label>&nbsp;</label>
+        <label>&nbsp;</label>
+        <label>Shipping Fee</label>
+        <label>PHP {{$dataReceipt['shipping_fee']}}</label>
     </span>
     <span class="thank-you-item">
         <label>&nbsp;</label>
@@ -93,7 +102,7 @@
             </label>
         @else
             <label>
-                COD
+            <label><b>{{$dataReceipt['method']}}</b></label>
             </label>
         @endif
     </span>
