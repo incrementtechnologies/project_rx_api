@@ -110,6 +110,9 @@ class AuthenticateController extends Controller
       }
 
       // the token is valid and we have found the user via the sub claim
+      if($user){
+        $user['scope_location'] = app('Increment\Imarket\Location\Http\LocationController')->getColumnValueByParams('account_id', $user['id'], 'code');
+      }
       return response()->json($user);
   }
   public function customValidate($text){

@@ -43,6 +43,7 @@ class APIController extends Controller
 
   protected $whiteListedDomain = array(
     'https://runwayexpress.co.uk/',
+    'http://runwayexpress.co.uk/'
   );
 
   protected $whiteListedDomainOrigin = array(
@@ -51,6 +52,9 @@ class APIController extends Controller
     'http://www.runwayexpress.co.uk',
     'http://runwayexpress.co.uk',
     'com.runwayexpress',
+    'com.runwayexpressriders',
+    'com.runwayexpress.runway-express-riders',
+    'com.runwayexpress.runway-express',
     'http://localhost:8001'
   );
 
@@ -427,6 +431,9 @@ class APIController extends Controller
         $condition["clause"] = (isset($condition["clause"])) ? $condition["clause"] : "=";
         $condition["value"] = (isset($condition["value"])) ? $condition["value"] : null;
         switch($condition["clause"]){
+          case 'or':
+            $this->model = $this->model->orWhere($condition["column"], '=', $condition["value"]);
+            break;
           default :
             $this->model = $this->model->where($condition["column"], $condition["clause"], $condition["value"]);
         }
@@ -579,6 +586,21 @@ class APIController extends Controller
       $result[0]['information'] = app('Increment\Account\Http\AccountInformationController')->getAccountInformation($accountId);
       $result[0]['billing'] = app('Increment\Account\Http\BillingInformationController')->getBillingInformation($accountId);
       return $result[0];
+    }else{
+      return null;
+    }
+  }
+
+  public function retrieveAccountDetailsProfileOnly($accountId){
+    $result = app('Increment\Account\Http\AccountController')->retrieveById($accountId);
+    if(sizeof($result) > 0){
+      $profile =  app('Increment\Account\Http\AccountProfileController')->getAccountProfile($accountId);
+      return array(
+        'username'  => $result[0]['username'],
+        'profile'   => $profile ? array(
+          'url' =>  $profile['url']
+        ) : null
+      );
     }else{
       return null;
     }
