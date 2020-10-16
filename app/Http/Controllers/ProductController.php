@@ -229,10 +229,15 @@ class ProductController extends APIController
       $modifiedrequest = new Request([]);
       if (isset($request["id"])){
         $result = DB::table('merchants as T1')
-          ->leftJoin('locations as T2','T2.merchant_id',"=", "T1.id")
+          ->leftJoin('locations as T2', function($join){
+              $join->on('T2.merchant_id', '=', 'T1.id');
+              $join->on('T2.account_id', '=', 'T1.id');
+          })
           ->where("T1.id", '=', $request['id'])
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
+          ->offset($request['offset'])
+          ->limit($request['limit'])
           ->get();
         if (count($result) > 0) {
           $result[0]->distance = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[0]->latitude, $result[0]->longitude);
@@ -244,10 +249,15 @@ class ProductController extends APIController
       }else{
         $result = DB::table('merchants as T1')
           ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.latitude","T2.longitude","T2.route","T2.locality"])
-          ->leftJoin('locations as T2', 'T2.merchant_id',"=","T1.id")
+          ->leftJoin('locations as T2', function($join){
+              $join->on('T2.merchant_id', '=', 'T1.id');
+              $join->on('T2.account_id', '=', 'T1.id');
+          })
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->distinct("T1.id")
+          ->offset($request['offset'])
+          ->limit($request['limit'])
           ->get();
           // sort disabled
 
