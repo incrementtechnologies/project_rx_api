@@ -175,6 +175,8 @@ class ProductController extends APIController
                 ->where("T1.id", '=', $request['id'])
                 ->where('T2.deleted_at', '=', null)
                 ->where('T1.deleted_at', '=', null)
+                ->offset($request['offset'])
+                ->limit($request['limit'])
                 ->get();
             for($i=0; $i<count($result); $i++){
                 $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
@@ -190,6 +192,8 @@ class ProductController extends APIController
                 ->leftJoin('locations as T2', 'T2.merchant_id',"=","T1.id")
                 ->where('T2.deleted_at', '=', null)
                 ->where('T1.deleted_at', '=', null)
+                ->offset($request['offset'])
+                ->limit($request['limit'])
                 ->distinct("T1.id")
                 ->get();
                 // sort disabled
