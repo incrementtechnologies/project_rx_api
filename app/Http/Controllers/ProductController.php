@@ -245,9 +245,7 @@ class ProductController extends APIController
         $code = $this->getLocationCodeScope($request['longitude'], $request['latitude']);
         $result = DB::table('merchants as T1')
           ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"])
-          ->leftJoin('locations as T2', function($join){
-              $join->on('T2.merchant_id', '=', 'T1.id');
-          })
+          ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->where('T2.code', '=', $code)
@@ -293,9 +291,7 @@ class ProductController extends APIController
     {
       $result = DB::table('merchants as T1')
           ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.merchant_id AS merch", "T2.latitude","T2.longitude","T2.route","T2.locality"])
-          ->leftJoin('locations as T2', function($join){
-              $join->on('T2.merchant_id', '=', 'T1.id');
-          })
+          ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->whereNotNull('T2.merchant_id')
