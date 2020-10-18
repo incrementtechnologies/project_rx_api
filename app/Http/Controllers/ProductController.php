@@ -279,6 +279,9 @@ class ProductController extends APIController
     {
         $merchantTime = Product::where('id','=', $merchant)->sum('preparation_time');
         $merchantCount = Product::where('id', '=', $merchant)->count();
+        if ($merchantCount == 0 || $merchantTime == 0){
+            return null;
+        }
         return $merchantTime/$merchantCount;
     }
 
