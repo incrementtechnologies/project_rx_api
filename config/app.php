@@ -176,6 +176,7 @@ return [
         Increment\Common\Image\ImageServiceProvider::class,
         Increment\Common\Scope\ScopeServiceProvider::class,
         Increment\Common\Payload\PayloadServiceProvider::class,
+        Increment\Common\Ticket\TicketServiceProvider::class,
         Increment\Imarket\Bundled\BundledServiceProvider::class,
         //Ratings Provider
         Increment\Common\Rating\RatingServiceProvider::class,
@@ -195,7 +196,6 @@ return [
         // Increment\Imarket\Wishlist\WishlistServiceProvider::class,
         
         Increment\Messenger\MessengerServiceProvider::class,
-        
         /*
          * Application Service Providers...
          */
