@@ -255,7 +255,7 @@ class ProductController extends APIController
           ->where('T1.deleted_at', '=', null)
           ->where('T2.code', '=', $code)
           ->distinct("T1.id")
-          ->offset($request['offset'])
+          ->offset(isset($request['offset']) ? $request['offset']:0)
           ->limit($request['limit'])
           ->get();
         $result = json_decode($result, true);
