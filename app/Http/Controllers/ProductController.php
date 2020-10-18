@@ -244,13 +244,13 @@ class ProductController extends APIController
       }else{
         $code = $this->getLocationCodeScope($request['longitude'], $request['latitude']);
         $result = DB::table('merchants as T1')
-          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"])
           ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->where('T2.code', '=', $code)
           ->distinct("T1.id")
-          ->get();
+          ->whereNotNull('T2.merchant_id')
+          ->get(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"]);
         $result = json_decode($result, true);
         for($i = 0; $i < count($result); $i++){
           $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
@@ -290,7 +290,6 @@ class ProductController extends APIController
     function getLocationCodeScope($longitude, $latitude)
     {
       $result = DB::table('merchants as T1')
-          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.merchant_id AS merch", "T2.latitude","T2.longitude","T2.route","T2.locality"])
           ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
