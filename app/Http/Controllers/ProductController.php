@@ -277,8 +277,12 @@ class ProductController extends APIController
     //grab average merchant prep time
     function getAverageMerchantPrepTime($merchant)
     {
-        $merchantTime = Product::where('id','=', $merchant)->sum('preparation_time');
-        $merchantCount = Product::where('id', '=', $merchant)->count();
+        $merchantTime = Product::where('id','=', $merchant)
+                        ->where('preparation_time', '!=', null)
+                        ->sum('preparation_time');
+        $merchantCount = Product::where('id', '=', $merchant)
+                        ->where('preparation_time', '!=', null)
+                        ->count();
         if ($merchantCount == 0 || $merchantTime == 0){
             return null;
         }
