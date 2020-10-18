@@ -255,7 +255,7 @@ class ProductController extends APIController
           ->where('T1.deleted_at', '=', null)
           ->where('T2.code', '=', $code)
           ->distinct("T1.id")
-          ->offset($request['offset'])
+          ->offset(isset($request['offset']) ? $request['offset']:0)
           ->limit($request['limit'])
           ->get();
         $result = json_decode($result, true);
@@ -277,8 +277,15 @@ class ProductController extends APIController
     //grab average merchant prep time
     function getAverageMerchantPrepTime($merchant)
     {
-        $merchantTime = Product::where('id','=', $merchant)->sum('preparation_time');
-        $merchantCount = Product::where('id', '=', $merchant)->count();
+        $merchantTime = Product::where('id','=', $merchant)
+                        ->where('preparation_time', '!=', null)
+                        ->sum('preparation_time');
+        $merchantCount = Product::where('id', '=', $merchant)
+                        ->where('preparation_time', '!=', null)
+                        ->count();
+        if ($merchantCount == 0 || $merchantTime == 0){
+            return null;
+        }
         return $merchantTime/$merchantCount;
     }
 
