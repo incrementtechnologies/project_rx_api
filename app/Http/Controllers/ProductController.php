@@ -71,7 +71,6 @@ class ProductController extends APIController
         $conditions = $request['condition'];
         foreach ($conditions as $condition){
             $datatemp = [];
-
             $result = Product::select('products.id','products.account_id','products.merchant_id','products.title', 'products.description','products.status','products.category', 'products.preparation_time', 'locations.latitude', 'locations.longitude', 'locations.route')
                 ->leftJoin('locations', 'products.account_id',"=","locations.account_id")
                 ->distinct("products.id")
@@ -298,7 +297,7 @@ class ProductController extends APIController
       $result = json_decode($result, true);
       for($i=0; $i<count($result); $i++)
       {
-        $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
+        $result[$i]["distance"] = $this->LongLatDistance($latitude,$longitude,$result[$i]["latitude"], $result[$i]["longitude"]);
           if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
             return $result[$i]["location_code"];
           }
