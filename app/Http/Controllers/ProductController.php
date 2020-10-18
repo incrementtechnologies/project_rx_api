@@ -228,10 +228,8 @@ class ProductController extends APIController
       $modifiedrequest = new Request([]);
       if (isset($request["id"])){
         $result = DB::table('merchants as T1')
-          ->leftJoin('locations as T2', function($join){
-              $join->on('T2.merchant_id', '=', 'T1.id');
-              $join->on('T2.account_id', '=', 'T1.id');
-          })
+          ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
+          ->whereNotNull('T2.merchant_id')
           ->where("T1.id", '=', $request['id'])
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
