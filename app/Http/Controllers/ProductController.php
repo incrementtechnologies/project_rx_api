@@ -246,30 +246,28 @@ class ProductController extends APIController
       }else{
         $code = $this->getLocationCodeScope($request['longitude'], $request['latitude']);
         $result = DB::table('merchants as T1')
-          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"])
-          ->leftJoin('locations as T2', function($join){
-              $join->on('T2.merchant_id', '=', 'T1.id');
-              $join->on('T2.account_id', '=', 'T1.id');
-          })
+          ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->where('T2.code', '=', $code)
           ->distinct("T1.id")
-          ->offset(isset($request['offset']) ? $request['offset']:0)
-          ->limit($request['limit'])
-          ->get();
+          ->whereNotNull('T2.merchant_id')
+          ->get(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"]);
         $result = json_decode($result, true);
-        for($i=0; $i<count($result); $i++){
-              $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
-              $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
-              $result[$i]["preparation_time"] = $this->getAverageMerchantPrepTime($result[$i]["account_id"]);
-              $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
-              $datatemp[] = $result[$i];
-          } 
+        for($i = 0; $i < count($result); $i++){
+          $result[$i]["distance"] = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[$i]["latitude"], $result[$i]["longitude"]);
+          if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
+            $result[$i]["rating"] = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[$i]["account_id"]);
+            $result[$i]["preparation_time"] = $this->getAverageMerchantPrepTime($result[$i]["account_id"]);
+            $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
+            $datatemp[] = $result[$i];
+          }
+        } 
       }
       $distance = array_column($datatemp, 'distance');
       array_multisort($distance, SORT_ASC, $datatemp);
       $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
+      $dashboard["size"]= sizeof($datatemp);
       $dashboard["data"] = $datatemp; 
       return $dashboard;
     }
@@ -292,22 +290,18 @@ class ProductController extends APIController
     function getLocationCodeScope($longitude, $latitude)
     {
       $result = DB::table('merchants as T1')
-          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"])
-          ->leftJoin('locations as T2', function($join){
-              $join->on('T2.merchant_id', '=', 'T1.id');
-              $join->on('T2.account_id', '=', 'T1.id');
-          })
+          ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
-          ->distinct("T1.id")
-          ->get();
+          ->whereNotNull('T2.merchant_id')
+          ->get(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude", "T2.merchant_id","T2.longitude","T2.route","T2.locality"]);
       $result = json_decode($result, true);
-      for($i=0; $i<count($result); $i++)
+      for($i=0; $i<sizeof($result); $i++)
       {
         $result[$i]["distance"] = $this->LongLatDistance($latitude,$longitude,$result[$i]["latitude"], $result[$i]["longitude"]);
-          if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
-            return $result[$i]["location_code"];
-          }
+        if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null && $result[$i]["location_code"] != null){
+          return $result[$i]["location_code"];
+        }
       }
       return null;
     }
