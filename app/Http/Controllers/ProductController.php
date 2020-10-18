@@ -30,9 +30,9 @@ class ProductController extends APIController
     public static function LongLatDistance(
         $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371)
       {
-        if (is_null($latitudeFrom) || is_null($longitudeFrom) || is_null($latitudeTo) || is_null($longitudeTo)) {
-          return null;
-        }
+        // if (is_null($latitudeFrom) || is_null($longitudeFrom) || is_null($latitudeTo) || is_null($longitudeTo)) {
+        //   return null;
+        // }
         $latitudeFrom = floatval($latitudeFrom);
         $longitudeFrom = floatval($longitudeFrom);
         $latitudeTo = floatval($latitudeTo);
@@ -249,13 +249,12 @@ class ProductController extends APIController
           ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"])
           ->leftJoin('locations as T2', function($join){
               $join->on('T2.merchant_id', '=', 'T1.id');
-              $join->on('T2.account_id', '=', 'T1.id');
           })
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
           ->where('T2.code', '=', $code)
           ->distinct("T1.id")
-          ->offset(isset($request['offset']) ? $request['offset']:0)
+          ->offset($request['offset'])
           ->limit($request['limit'])
           ->get();
         $result = json_decode($result, true);
@@ -292,10 +291,9 @@ class ProductController extends APIController
     function getLocationCodeScope($longitude, $latitude)
     {
       $result = DB::table('merchants as T1')
-          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"])
+          ->select(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.merchant_id AS merch", "T2.latitude","T2.longitude","T2.route","T2.locality"])
           ->leftJoin('locations as T2', function($join){
               $join->on('T2.merchant_id', '=', 'T1.id');
-              $join->on('T2.account_id', '=', 'T1.id');
           })
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
@@ -304,8 +302,7 @@ class ProductController extends APIController
       $result = json_decode($result, true);
       for($i=0; $i<count($result); $i++)
       {
-        $result[$i]["distance"] = $this->LongLatDistance($latitude,$longitude,$result[$i]["latitude"], $result[$i]["longitude"]);
-          if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null){
+        $result[$i]["distance"] = $this->LongLatDistance($latitude,$longitude,$result[$i]["latitude"], $result[$i]["longitude"]);          if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null && $result[$i]["location_code"]){
             return $result[$i]["location_code"];
           }
       }
