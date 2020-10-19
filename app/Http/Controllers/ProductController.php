@@ -261,8 +261,8 @@ class ProductController extends APIController
             $datatemp[] = $result[$i];
           }
         }
-         
       }
+      return $datatemp;
       $distance = array_column($datatemp, 'distance');
        array_multisort($distance, SORT_ASC, $datatemp);
       $datatemp = array_slice($datatemp, $request['offset'], $request['limit']);
