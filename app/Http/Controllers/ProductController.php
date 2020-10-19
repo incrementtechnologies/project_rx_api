@@ -30,9 +30,9 @@ class ProductController extends APIController
     public static function LongLatDistance(
         $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371)
       {
-        if (is_null($latitudeFrom) || is_null($longitudeFrom) || is_null($latitudeTo) || is_null($longitudeTo)) {
-          return null;
-        }
+        // if (is_null($latitudeFrom) || is_null($longitudeFrom) || is_null($latitudeTo) || is_null($longitudeTo)) {
+        //   return null;
+        // }
         $latitudeFrom = floatval($latitudeFrom);
         $longitudeFrom = floatval($longitudeFrom);
         $latitudeTo = floatval($latitudeTo);
@@ -260,10 +260,12 @@ class ProductController extends APIController
             $result[$i]["image"] = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[$i]["id"], "featured");
             $datatemp[] = $result[$i];
           }
-        } 
+        }
+         
       }
       $distance = array_column($datatemp, 'distance');
-      array_multisort($distance, SORT_ASC, $datatemp);
+       array_multisort($distance, SORT_ASC, $datatemp);
+      $datatemp = array_slice($datatemp, $request['offset'], $request['limit']);
       $dashboard["request_timestamp"]= date("Y-m-d h:i:s");
       $dashboard["size"]= sizeof($datatemp);
       $dashboard["data"] = $datatemp; 
@@ -296,10 +298,10 @@ class ProductController extends APIController
       $result = json_decode($result, true);
       for($i=0; $i<sizeof($result); $i++)
       {
-        $result[$i]["distance"] = $this->LongLatDistance($latitude,$longitude,$result[$i]["latitude"], $result[$i]["longitude"]);
+        $result[$i]["distance"] = $this->LongLatDistance($latitude,$longitude,$result[$i]["latitude"], $result[$i]["longitude"]);          
         if ($result[$i]["distance"] <= 30 && $result[$i]["distance"] != null && $result[$i]["location_code"] != null){
-          return $result[$i]["location_code"];
-        }
+            return $result[$i]["location_code"];
+          }
       }
       return null;
     }
