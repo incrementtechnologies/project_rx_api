@@ -226,18 +226,19 @@ class ProductController extends APIController
       $datatemp = [];
       $conditions = $request['condition'];
       $modifiedrequest = new Request([]);
-      if (isset($request["id"])){
+      if (isset($request["id"]) || isset($request["code"])){
         $result = DB::table('merchants as T1')
+          ->where("T1.id", '=', $request['id'])
+          ->orWhere("T1.code", '=', $request['code'])
           ->join('locations as T2', 'T2.account_id', '=', 'T1.account_id')
           ->whereNotNull('T2.merchant_id')
-          ->where("T1.id", '=', $request['id'])
           ->where('T2.deleted_at', '=', null)
           ->where('T1.deleted_at', '=', null)
-          ->get();
+          ->get(["T1.id", "T1.code","T1.account_id", "T1.name", "T1.prefix", "T1.logo", "T2.code AS location_code", "T2.latitude","T2.longitude","T2.route","T2.locality"]);
         if (count($result) > 0) {
-          $result[0]->distance = $this->LongLatDistance($request["latitude"],$request["longitude"],$result[0]->latitude, $result[0]->longitude);
+          $result[0]->distance = $this->LongLatDistance($request["latitude"],$request["longitude"], $result[0]->latitude, $result[0]->longitude);
           $result[0]->rating = app('Increment\Common\Rating\Http\RatingController')->getRatingByPayload("merchant", $result[0]->account_id);
-          $result[0]["preparation_time"] = $this->getAverageMerchantPrepTime($result[0]["account_id"]);
+          $result[0]->preparation_time = $this->getAverageMerchantPrepTime($result[0]->account_id);
           $result[0]->image = app('Increment\Imarket\Product\Http\ProductImageController')->getProductImage($result[0]->id, "featured");
           $datatemp[] = $result[0];
         }
