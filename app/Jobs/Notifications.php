@@ -15,6 +15,7 @@ use App\Events\Orders;
 use App\Events\Call;
 use App\Events\Rider;
 use App\Events\LocationSharing;
+use App\Events\AccountStatus;
 use Pusher\Pusher;
 class Notifications implements ShouldQueue
 {
@@ -79,7 +80,7 @@ class Notifications implements ShouldQueue
                 broadcast(new LocationSharing($this->data));
               break;
             case 'account_status':
-                broadcast(new LocationSharing($this->data));
+                broadcast(new AccountStatus($this->data));
               break;
             default:
                 # code...
